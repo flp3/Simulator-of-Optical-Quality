@@ -56,11 +56,10 @@ def test_mtf():
     A DIFFRACTION LIMITED LARGE SPACE TELESCOPE"
     MTF of a perfect round aperture will hit zero at a cut off frequency.
     """
-    radius = 17  # mm
-    wave_length = 860e-9  # m
-    focal_length = 2.1  # m
+    radius = 12  # mm
+    wave_length = 800e-9  # m
+    focal_length = 91e-3  # m
     pixel_pitch = 4.5e-6  # m
-
 
     ap = Aperture.disk(radius)
     ap.add_padding(4)
@@ -68,6 +67,7 @@ def test_mtf():
     mtf_sampling, mtf = psf.mtf()
 
     theoretical_cut_off_frequency = (2 * ap.radius * 1e-3) / (wave_length * focal_length) * pixel_pitch
+
 
     mtf_zero_index = (mtf < 1e-5).argmax()
     assert mtf_sampling[mtf_zero_index] == pytest.approx(theoretical_cut_off_frequency, abs=0.1)
