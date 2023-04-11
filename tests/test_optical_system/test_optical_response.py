@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from image_simulator.optical_simulator.optical_response import Aperture, Optical_psf
+from optical_system.optical_response import Aperture, Optical_psf
 
 
 def test_initialization():
@@ -66,7 +66,8 @@ def test_mtf():
     psf = Optical_psf.from_aperture(ap, wave_length, focal_length)
     mtf_sampling, mtf = psf.mtf()
 
-    theoretical_cut_off_frequency = (2 * ap.radius * 1e-1) / (wave_length * focal_length) * pixel_pitch
+    theoretical_cut_off_frequency = (2 * ap.radius * 1e-3) / (wave_length * focal_length) * pixel_pitch
+
 
     mtf_zero_index = (mtf < 1e-5).argmax()
     assert mtf_sampling[mtf_zero_index] == pytest.approx(theoretical_cut_off_frequency, abs=0.1)
