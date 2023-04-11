@@ -59,12 +59,12 @@ def test_mtf():
     radius = 12  # mm
     wave_length = 800e-9  # m
     focal_length = 91e-3  # m
-    pixel_pitch = 4.5e-6  # m
+    pixel_pitch = 6.5e-6  # m
 
     ap = Aperture.disk(radius)
     ap.add_padding(4)
     psf = Optical_psf.from_aperture(ap, wave_length, focal_length)
-    mtf_sampling, mtf = psf.mtf()
+    mtf_sampling, mtf = psf.mtf(unit=pixel_pitch)
 
     theoretical_cut_off_frequency = (2 * ap.radius * 1e-3) / (wave_length * focal_length) * pixel_pitch
 
