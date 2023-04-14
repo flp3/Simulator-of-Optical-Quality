@@ -15,6 +15,7 @@ def test_zernike_index():
     with pytest.raises(AssertionError):
         zp.ZernikeIndex((1, 2))
 
+
 def test_zernikecoeeficient():
     zernike_coef = zp.ZernikeCoefficient(9, 'Focus', np.sqrt(3))
     assert zernike_coef == zp.ZernikeCoefficient(9, 'Focus', np.sqrt(3))
@@ -27,24 +28,26 @@ def test_calculate():
     _theta = 0.3
 
     zernike_co = zernike_cos[1]
-    assert zernike_co.calculate_zernike_polynomial(np.asarray(_rho), np.asarray(_theta)) == 1
+    assert zernike_co.calculate_zernike_polynomial(np.asarray(_rho),
+                                                   np.asarray(_theta)) == 1
 
     zernike_co = zernike_cos[4]
-    assert zernike_co.calculate_radial_polynomial(np.asarray(_rho)) == 2 * _rho ** 2 - 1
+    assert zernike_co.radial_polynomial(np.asarray(_rho)) == 2 * _rho ** 2 - 1
 
     zernike_co = zernike_cos[5]
-    manual_calculation = _rho ** 2 * np.cos(2 * _theta) * zernike_co.normalization
-    assert zernike_co.calculate_zernike_polynomial(np.asarray(_rho), np.asarray(_theta)) == manual_calculation
+    manual_calculation = _rho ** 2 * np.cos(2 * _theta) * zernike_co.norm
+    assert zernike_co.calculate_zernike_polynomial(
+        np.asarray(_rho), np.asarray(_theta)) == manual_calculation
 
 
 def test_normalization():
     zernike_cos = zp.ZernikeCoefficients(6)
     zernike_co = zernike_cos[5]
-    
+
     r = np.linspace(0, 1, 1000)
-    theta =  x = np.linspace(0, 2 * np.pi, 1000)
+    theta = np.linspace(0, 2 * np.pi, 1000)
     [r2, theta2] = np.meshgrid(r, theta)
-    
+
     zernike_values = zernike_co.calculate_zernike_polynomial(r2, theta2)
     l2_norm = np.sum(zernike_values ** 2 * r2) / r2.size * 2 * np.pi
     assert l2_norm == pytest.approx(np.pi, abs=1e-2)
