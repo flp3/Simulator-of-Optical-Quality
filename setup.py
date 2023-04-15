@@ -14,5 +14,6 @@ setup(
         'opencv-contrib-python',         
         'numpy',
         'matplotlib',
+        'click'
     ],
 )

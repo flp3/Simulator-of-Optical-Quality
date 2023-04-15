@@ -32,21 +32,15 @@ def test_from_aperture():
     """
     radius = 175  # mm
     wave_length = 560e-9  # m
-    focal_length = 2.1  # m
+    focal_length = 2.3  # m
+    unit = 1e-3
 
-    ap = Aperture.disk(radius)
+    ap = Aperture.disk(radius, unit)
     ap.add_padding(4 ** 2)
     psf = Optical_psf.from_aperture(ap, wave_length, focal_length)
-    x = psf.sampling
-    theoretical_first_minimum_ring_radius = 1.22 * wave_length * focal_length / (2 * ap.radius * 1e-3)
-
-    center_peak = psf.get_center
-    psf_line_zoom = psf.array[center_peak[0], center_peak[1]:]
-    x_zoom = x[center_peak[1]:]
-
-    # Here we search for the first minimum, i.e first time the derivative changes sign, i.e becomes positive.
-    first_minimum_index = (np.diff(psf_line_zoom) >= 0).argmax()
-    assert x_zoom[first_minimum_index] == pytest.approx(theoretical_first_minimum_ring_radius, abs=1e-7)
+    theoretical_first_minimum_ring_radius = 1.22 * wave_length * focal_length / (2 * ap.radius * ap.unit)
+    first_0 = psf.get_first_zero()
+    assert first_0 == pytest.approx(theoretical_first_minimum_ring_radius, abs=1e-7)
 
 
 def test_mtf():
@@ -56,7 +50,7 @@ def test_mtf():
     A DIFFRACTION LIMITED LARGE SPACE TELESCOPE"
     MTF of a perfect round aperture will hit zero at a cut off frequency.
     """
-    radius = 12  # mm
+    radius = 15  # mm
     wave_length = 800e-9  # m
     focal_length = 91e-3  # m
     pixel_pitch = 6.5e-6  # m
@@ -67,7 +61,6 @@ def test_mtf():
     mtf_sampling, mtf = psf.mtf(unit=pixel_pitch)
 
     theoretical_cut_off_frequency = (2 * ap.radius * 1e-3) / (wave_length * focal_length) * pixel_pitch
-
 
     mtf_zero_index = (mtf < 1e-5).argmax()
     assert mtf_sampling[mtf_zero_index] == pytest.approx(theoretical_cut_off_frequency, abs=0.1)

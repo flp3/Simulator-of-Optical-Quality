@@ -202,7 +202,7 @@ class ZernikeCoefficient(ZernikeIndex):
             zernike_coef = radial * azimuthal * self.norm
         return zernike_coef
 
-    def cartesian_matrix(self, N: int = 100) -> tuple[nd[np.float64], nd[np.float64]]:
+    def cartesian_matrix(self, N: int = 500) -> tuple[nd[np.float64], nd[np.float64]]:
         '''In order to evaluate the zernikes on a rectangular grid, we create
         the quartesian X, Y grid and return the Zernike coefficient'''
         x = np.linspace(-self.max_rho, self.max_rho, N)
@@ -239,7 +239,7 @@ class ZernikeCoefficients():
 
     def __getitem__(self,
                     item: typing.Union[tuple[int, float],
-                                       int]) -> ZernikeCoefficient:
+                                       int]) -> ZernikeCoefficient | None:
         output = None
         for coef in self.coeffs:
             if isinstance(item, tuple):
@@ -250,19 +250,34 @@ class ZernikeCoefficients():
                 if coef.fringe == item:
                     output = coef
                     break
-        if output is None:
-            raise ZernikeCoefficientsError(
-                'the index: %s is not yet Implemented, the maximum Fring index'
-                'implemented is %f' % (item, self.max_fringe_order))
         return output
 
-    def illustrate(self, max_radius=5, max_azimuth=6):
+    def illustrate_single(self, radius=2, azimuth=2):
+        """
+        Provide a nice visual too to understand how one Zernike polynomial represent optical aberrations.
+        Example of usage:
+        a = zp.ZernikeCoefficients(33)
+        a.illustrate_single(5, 6)
+
+        Args:
+            radius (int, optional):. Defaults to 2.
+            azimuth (int, optional):. Defaults to 2.
+        """
+        if self[(radius, azimuth)] is not None:
+            plt.figure()
+            _, img = self[(radius, azimuth)].cartesian_matrix()
+            plt.title('Fringe: %s, %s' % (self[(radius, azimuth)].fringe, self[(radius, azimuth)].name))
+            plt.imshow(img)
+            plt.axis('off')
+            plt.show()
+
+    def illustrate_panel(self, max_radius=5, max_azimuth=6):
         """
         Provide a nice visual tool to understand how the different Zernike
         coefficients represent optical aberrations.
         Example of usage:
         a = zp.ZernikeCoefficients(33)
-        a.illustrate(5, 6)
+        a.illustrate_panel(5, 6)
 
         Args:
             max_radius (int, optional) Defaults to 5.
@@ -275,15 +290,14 @@ class ZernikeCoefficients():
 
         for radius in range(len_rows):
             for azimuth in range(-radius, radius + 1):
-                if self[(radius, azimuth)] is None:
-                    continue
-                i = np.where(col == azimuth)[0]
-                _, img = self[(radius, azimuth)].cartesian_matrix()
-                idx = int(radius * len_columns + i + 1)
-                ax = fig.add_subplot(len_rows, len_columns, idx)
-                ax.set_title('Fringe: %s' % self[(radius, azimuth)].fringe)
-                ax.imshow(img)
-                ax.axis('off')
+                if self[(radius, azimuth)] is not None:
+                    i = np.where(col == azimuth)[0]
+                    _, img = self[(radius, azimuth)].cartesian_matrix()
+                    idx = int(radius * len_columns + i + 1)
+                    ax = fig.add_subplot(len_rows, len_columns, idx)
+                    ax.set_title('Fringe: %s, %s' % (self[(radius, azimuth)].fringe, self[(radius, azimuth)].name))
+                    ax.imshow(img)
+                    ax.axis('off')
 
         fig.text(0.5, 0.075, 'azimuth index', ha='center', fontsize=14)
         fig.text(0.05, 0.5, 'radial index', va='center', rotation='vertical',
@@ -308,10 +322,10 @@ class ZernikeCoefficients():
             tuple: a set of Zernike Coefficients ordered in Fringe index
             representation.
         """
-        return (ZernikeCoefficient(1, "Piston", 1),
+        return (ZernikeCoefficient(1, "No aberration", 1),
                 ZernikeCoefficient(2, "Tilt at 0°", 2),
                 ZernikeCoefficient(3, "Tilt at 90°", 2),
-                ZernikeCoefficient(4, "Focus", np.sqrt(3)),
+                ZernikeCoefficient(4, "Defocus", np.sqrt(3)),
                 ZernikeCoefficient(5, "Astigmatism at 0°", np.sqrt(6)),
                 ZernikeCoefficient(6, "Astigmatism at 45°", np.sqrt(6)),
                 ZernikeCoefficient(7, "Coma at 0°", np.sqrt(8)),

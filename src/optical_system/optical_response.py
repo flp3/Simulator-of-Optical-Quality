@@ -1,6 +1,8 @@
 import numpy as np
 from numpy.typing import NDArray
 from base_class import BaseClass
+import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
 import cv2
 import typing
 
@@ -103,7 +105,8 @@ class Aperture:
     @classmethod
     def disk_with_obstruction(cls,
                               radius: int,
-                              obstruction_radius: int) -> "Aperture":
+                              obstruction_radius: int,
+                              unit: float = 1e-3) -> "Aperture":
         """
         This method creates an Aperture Class where the optical system
         aperture is a donut.
@@ -112,19 +115,23 @@ class Aperture:
             a radius is its first parameter.
             obstruction_radius (int): The aperture is a donut,
             an obstruction_radius is its second parameter.
+            unit (float, optional): depending if we want to consider mm,
+            in this case we can set 1e-3, or in pixel space,
+            in this case {pixel_size}. Defaults to 1e-3.
 
         Returns:
             Aperture
         """
-        disk_aperture = cls.disk(radius)
-        new_array = disk_aperture.array.copy()
+        disk_aperture = cls.disk(radius, unit)
+        new_array = np.abs(disk_aperture.array.copy()).astype(np.float64)
         new_array = cv2.circle(new_array, disk_aperture.get_center, obstruction_radius, 0, -1)
-        return disk_aperture.copy_with(array=new_array)
+        return disk_aperture.copy_with(array=new_array.astype(np.complex128))
 
     @classmethod
     def disk_obstruction_spider(cls,
                                 radius: int,
-                                obstruction_radius: int) -> "Aperture":
+                                obstruction_radius: int,
+                                unit: float = 1e-3) -> "Aperture":
         """
         This method creates an Aperture Class where the optical system
         aperture is a donut, mounted on a cross.
@@ -138,11 +145,14 @@ class Aperture:
             parameter.
             obstruction_radius (int): The aperture is a donut,
             an obstruction_radius is its second parameter.
+            unit (float, optional): depending if we want to consider mm,
+            in this case we can set 1e-3, or in pixel space,
+            in this case {pixel_size}. Defaults to 1e-3.
 
         Returns:
             Aperture
         """
-        disk_obstruction = cls.disk_with_obstruction(radius, obstruction_radius)
+        disk_obstruction = cls.disk_with_obstruction(radius, obstruction_radius, unit)
         new_array = disk_obstruction.array.copy()
         new_array[disk_obstruction.center[0], :] = 0
         new_array[:, disk_obstruction.center[1]] = 0
@@ -176,6 +186,14 @@ class Aperture:
         npad_x = self.array.shape[1] * padding // 4
         self.array = np.pad(self.array, ((npad_y, npad_y), (npad_x, npad_x)), 'constant')
         self.center = self.get_center
+
+    def illustrate_magnitude(self):
+        plt.figure()
+        img = np.abs(self.array).astype(np.float64)
+        plt.title('aperture shape')
+        plt.imshow(img)
+        plt.axis('off')
+        plt.show()
 
 
 class Optical_psf(BaseClass):
@@ -235,7 +253,7 @@ class Optical_psf(BaseClass):
         psf_sampling = np.fft.fftshift(psf_sampling)
         return Optical_psf(array=Fap.astype(np.float64), aperture=aperture, sampling=psf_sampling, unit=aperture.unit)
 
-    def mtf(self, unit: float = 5.5e-6) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
+    def mtf(self, unit: float = 6.4e-6) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
         """
         From the Optical Point Spread Function, applying a Fourier Transform,
         we obtain the Modulation Transfer function of the optical system.
@@ -250,3 +268,38 @@ class Optical_psf(BaseClass):
         """
         mtf = self.fourier_transform_2D(output_unit=unit).line_profile()
         return mtf.sampling, mtf.array
+
+    def get_first_zero(self):
+        center_peak = self.get_center
+        psf_line_zoom = self.array[center_peak[0], center_peak[1]:]
+        x_zoom = self.sampling[center_peak[1]:]
+
+        # Here we search for the first minimum, i.e first time the derivative changes sign, i.e becomes positive.
+        first_minimum_index = (np.diff(psf_line_zoom) >= 0).argmax()
+        first_zero_in_focal_plan_in_m = x_zoom[first_minimum_index]
+        return first_zero_in_focal_plan_in_m
+
+    def illustrate_psf_and_mtfs(self, mtfs, sub_title='with no aberrations'):
+        _, (ax1, ax2) = plt.subplots(1, 2)
+        ax1.imshow(self.zoom())
+        first_0 = self.get_first_zero() * 1e6
+        n = 1.5e-6 / (np.mean(np.diff(self.sampling)))
+        scalebar = AnchoredSizeBar(ax1.transData, int(round(n)), "1.5 um", loc='lower center', sep=5, color='white', frameon=False)
+        ax1.add_artist(scalebar)
+        ax1.axis('off')
+        ax1.text(3, 12, 'first 0 appears at %f um in the focal plane' % first_0, style='italic',
+                 bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
+        ax1.set_title('PSF: as the light diffractes through the aperture ' + sub_title)
+
+        for mtf_tuple in mtfs:
+            mtf_sampling, mtf, mtf_name = mtf_tuple
+            ax2.plot(mtf_sampling[mtf_sampling < 0.7], mtf[mtf_sampling < 0.7], label=mtf_name)
+
+        ax2.set_title('MTF: how much contrast at all frequencies ' + sub_title)
+        ax2.axvline(x=0.5, color='red', linestyle='--', label='Nyquist frequency')
+        ax2.legend()
+
+        plt.xlabel('cycle / pixels', fontsize=10)
+        plt.ylabel('Contrast', fontsize=10)
+
+        plt.show()
