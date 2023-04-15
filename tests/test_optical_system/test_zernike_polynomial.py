@@ -58,6 +58,6 @@ def test_init():
         zp.ZernikeCoefficients(300)
 
     zernike_cos = zp.ZernikeCoefficients(3)
-    assert zernike_cos[1] == zp.ZernikeCoefficient(1, "Piston", 1)
+    assert zernike_cos[1] == zp.ZernikeCoefficient(1, "No aberration", 1)
     assert zernike_cos[1].radius == 0
-    assert zernike_cos[(0, 0)] == zp.ZernikeCoefficient(1, "Piston", 1)
+    assert zernike_cos[(0, 0)] == zp.ZernikeCoefficient(1, "No aberration", 1)
