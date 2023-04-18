@@ -23,3 +23,6 @@ include-package-data = false
 [tool.setuptools.packages.find]
 where = ["src"]
 namespaces = false
+
+[tool.isort]
+profile = "black"
