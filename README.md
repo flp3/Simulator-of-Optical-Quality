@@ -1,4 +1,4 @@
-# Simulator of optical systems quality
+# Optical Systems Quality Simulator
 
 
 This project aims to democratize physical and mathematical concepts that various industries uses to design optical systems, from smartphones to Eath Observation satellites.
