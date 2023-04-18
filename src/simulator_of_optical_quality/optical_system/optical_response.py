@@ -1,6 +1,6 @@
 import numpy as np
 from numpy.typing import NDArray
-from base_class import BaseClass
+from ..base_class import BaseClass
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
 import cv2

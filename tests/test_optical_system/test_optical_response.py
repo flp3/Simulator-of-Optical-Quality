@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from optical_system.optical_response import Aperture, Optical_psf
+from simulator_of_optical_quality.optical_system.optical_response import Aperture, Optical_psf
 
 
 def test_initialization():
