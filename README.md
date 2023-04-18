@@ -55,7 +55,15 @@ Commands:
   visualize-system-with-aberrations        visualize the light propagation through an
                                              acquisition system with optical aberrations
 ```
-For example we could visualize the light propagation through a lens of 15mm of radius and see the Point spread function, and its Modulation function:
+For example we could
+* visualize the impact of different optical aberrations on the light' s phase as a wave passing through an open disk (as a lens):
+```bash
+python .\src\cli.py visualize-aberrations --zernike_azimuth 2 --zernike_radial 2
+```
+![Optical aberrations](https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/Optical%20aberrations.png?raw=true)
+
+
+* visualize the light propagation through a lens of 15mm of radius with some defocus aberration and see the Point spread function, and its Modulation function:
 ```bash
 python .\src\cli.py visualize-system-with-aberrations l --radius 15 --wavelength 800e-9 --focal_length 0.1 --pixel_size 1.5e-6
 ```
