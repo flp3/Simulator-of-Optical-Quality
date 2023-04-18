@@ -21,7 +21,3 @@ The code is mainly based on those 3 scientific papers / books:
  - To simulate light diffraction this book helped me a lot, [Modeling the Imaging Chain of Digital Cameras](https://www.spiedigitallibrary.org/ebooks/TT/Modeling-the-Imaging-Chain-of-Digital-Cameras/eISBN-9780819483362/10.1117/3.868276?SSO=1)
  - To test that the algorithms modelize correctly the physical phenomena, this paper helped me, [The Use Of Image Quality Criteria In Designing A Diffraction Limited Large Space Telescope](https://spie.org/Publications/Proceedings/Paper/10.1117/12.953525?SSO=1)
  - To add optical aberrations with the simple and beautiful Zernike polynomial, this book helps me, [Zernike F, The Diffraction Theory of Aberrations, in Optical Image Evaluation Circular 526, ( National Bureau of Standards , Washington, D. C), 1952](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://nvlpubs.nist.gov/nistpubs/Legacy/circ/nbscircular526.pdf)
-
-
-
-
