@@ -13,7 +13,7 @@ With this python project, the user could:
 In this project we are using physical and mathematical concepts developped in the past 2 centuries:
 
 From [Joseph von Fraunhofer](https://en.wikipedia.org/wiki/Joseph_von_Fraunhofer) who helped to modelize the propagation of the light, as a wave, through a partly blocked plane, with the Fraunhofer diffraction equation.
-![Fraunhofer_diffraction_pattern_image](https://github.com/flp3/Simulator-of-Optical-Quality/tree/master/Screenshots/light propagation through an aperture.png?raw=true)
+![Fraunhofer_diffraction_pattern_image](https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/light%20propagation%20through%20an%20aperture.png?raw=true)
 
 To [Frits Zernike](https://www.nobelprize.org/prizes/physics/1953/zernike/facts/), who was awarded with the Nobel Prize for Physics in 1952 for his work on modelizing optical aberrations through phase contrast polynomial.
 
