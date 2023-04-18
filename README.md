@@ -10,19 +10,17 @@ With this python project, the user could:
 
 
 ## Acknowledgements
-In this project we are using physical and mathematical concepts developped and improved since Thomas Young's interference experiment described in his paper in 1801 [On the theory of light and colours](https://royalsocietypublishing.org/doi/10.1098/rstl.1802.0004) where he illustrated the wave property of light, enriching  Isaac Newton' s corpuscular theory of light.
+In this project we are using physical and mathematical concepts developped and improved since Thomas Young's interference experiment described in his paper in 1801 [On the theory of light and colours](https://royalsocietypublishing.org/doi/10.1098/rstl.1802.0004) where he illustrated the wave property of light, , enriching  Isaac Newton' s corpuscular theory of light.
 
+<img src="https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/Young%20Interference%20illustration%201801.png?raw=true" alt="young interferences illustrations" width="25%" height="25%" title="Young interferences illustrations"> <img src="https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/light%20propagation%20through%20an%20aperture.png?raw=true" alt="Frauhnofer diffraction" width="40%" height="40%"> <img src="https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/Zernike%20aberration%20illustration.png?raw=true" alt="Zernike aberration illustration" width="32%" height="32%">
+*Young' s illustration on light interference, light propagation through a partially obstructed plane, F. Zernike' s illustration of optical aberration*
 
-From [Joseph von Fraunhofer](https://en.wikipedia.org/wiki/Joseph_von_Fraunhofer) who helped to modelize the propagation of the light, as a wave, through a partly blocked plane, with the Fraunhofer diffraction equation.
-
-![Fraunhofer_diffraction_pattern_image](https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/light%20propagation%20through%20an%20aperture.png?raw=true)
-
+From [Joseph von Fraunhofer](https://en.wikipedia.org/wiki/Joseph_von_Fraunhofer) who helped to modelize the propagation of the light for far field, as a wave, through a partly blocked plane, with the Fraunhofer diffraction equation.
 To [Frits Zernike](https://www.nobelprize.org/prizes/physics/1953/zernike/facts/), who was awarded with the Nobel Prize for Physics in 1952 for his work on modelizing optical aberrations through phase contrast polynomial.
-
 The code is mainly based on those 3 scientific papers / books:
- - To simulate light diffraction this book helped me a lot, [Modeling the Imaging Chain of Digital Cameras](https://www.spiedigitallibrary.org/ebooks/TT/Modeling-the-Imaging-Chain-of-Digital-Cameras/eISBN-9780819483362/10.1117/3.868276?SSO=1)
- - To test that the algorithms modelize correctly the physical phenomena, this paper helped me, [The Use Of Image Quality Criteria In Designing A Diffraction Limited Large Space Telescope](https://spie.org/Publications/Proceedings/Paper/10.1117/12.953525?SSO=1)
- - To add optical aberrations with the simple and beautiful Zernike polynomial, this book helps me, [Zernike F, The Diffraction Theory of Aberrations, in Optical Image Evaluation Circular 526, ( National Bureau of Standards , Washington, D. C), 1952](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://nvlpubs.nist.gov/nistpubs/Legacy/circ/nbscircular526.pdf)
+ - To simulate light diffraction, [Modeling the Imaging Chain of Digital Cameras](https://www.spiedigitallibrary.org/ebooks/TT/Modeling-the-Imaging-Chain-of-Digital-Cameras/eISBN-9780819483362/10.1117/3.868276?SSO=1)
+ - To test that the algorithms modelize correctly the physical phenomena, [The Use Of Image Quality Criteria In Designing A Diffraction Limited Large Space Telescope](https://spie.org/Publications/Proceedings/Paper/10.1117/12.953525?SSO=1)
+ - To add optical aberrations with the simple and beautiful Zernike polynomial, [Zernike F, The Diffraction Theory of Aberrations, in Optical Image Evaluation Circular 526, ( National Bureau of Standards , Washington, D. C), 1952](https://github.com/flp3/Simulator-of-Optical-Quality/blob/384d7d2d5492cd7909b09fdfd35841fc7691b416/Literature/The%20diffraction%20theory%20of%20aberrations%20by%20F%20Zernike.pdf)
 
 ## Installation
 
