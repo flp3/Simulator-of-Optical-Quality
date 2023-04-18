@@ -3,7 +3,7 @@ requires = ["setuptools>=61.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Simulator of Optical Quality"
+name = "simulator-of-optical-quality"
 authors = [{name = "Florian Pignol", email = "florian.pignol2@gmal.com"}]
 version = "0.1"
 dependencies = [
