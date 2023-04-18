@@ -17,7 +17,6 @@ dependencies = [
 testing = ["pytest"]
 
 [tool.setuptools]
-package-dir = {"" = "src"}
 include-package-data = false
 
 [tool.setuptools.packages.find]
