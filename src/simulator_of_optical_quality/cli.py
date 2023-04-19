@@ -1,6 +1,10 @@
 import click
-from optical_system import zernike_polynomial as zp
-from optical_system.optical_response import Aperture, Optical_psf
+
+from simulator_of_optical_quality.optical_system import zernike_polynomial as zp
+from simulator_of_optical_quality.optical_system.optical_response import (
+    Aperture,
+    Optical_psf,
+)
 
 
 @click.group(context_settings={'help_option_names': ['-h', '--help']})
