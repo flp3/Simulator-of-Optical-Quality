@@ -1,7 +1,8 @@
-import numpy as np
-from math import factorial, copysign
-import matplotlib.pyplot as plt
 import typing
+from math import copysign, factorial
+
+import matplotlib.pyplot as plt
+import numpy as np
 from numpy.typing import NDArray as nd
 
 

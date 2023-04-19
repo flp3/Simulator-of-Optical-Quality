@@ -1,6 +1,7 @@
-from optical_system import zernike_polynomial as zp
-import pytest
 import numpy as np
+import pytest
+
+from simulator_of_optical_quality.optical_system import zernike_polynomial as zp
 
 
 def test_zernike_index():
