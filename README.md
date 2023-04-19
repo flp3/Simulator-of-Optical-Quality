@@ -42,7 +42,7 @@ For anyone interested into simulating and getting nice visualization without get
 
 Some nice commands are already deployed:
 ```bash
-python .\src\cli.py --help
+python .\src\simulator_of_optical_quality\cli.py --help
 ```
 ```bash
 Options:
@@ -58,19 +58,19 @@ Commands:
 For example we could
 * visualize the impact of different optical aberrations on the light' s phase as a wave passing through an open disk (as a lens):
 ```bash
-python .\src\cli.py visualize-aberrations --zernike_azimuth 2 --zernike_radial 2
+python .\src\simulator_of_optical_quality\cli.py visualize-aberrations --zernike_azimuth 2 --zernike_radial 2
 ```
 ![Optical aberrations](https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/Optical%20aberrations.png?raw=true)
 
 
 * visualize the light propagation through a lens of 15mm of radius with some defocus aberration and see the Point spread function, and its Modulation function:
 ```bash
-python .\src\cli.py visualize-system-with-aberrations l --radius 15 --wavelength 800e-9 --focal_length 0.1 --pixel_size 1.5e-6
+python .\src\simulator_of_optical_quality\cli.py visualize-system-with-aberrations l --radius 15 --wavelength 800e-9 --focal_length 0.1 --pixel_size 1.5e-6
 ```
 ![light propagation example](https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/light%20propagation%20with%20a%20lense,%2015mm%20radius,%20wavelength%20800nm,%20focal%20length%2010cm,%20pixel%20size%201.5um.png?raw=true)
 
 * Simulate the image quality of a Cassgrain Telescope satellite, at 500km altitude orbit, capturing image of the earth with a ground sampled distance of 0.85m per pixel, and a bit of alisaing as the MTF at Nyquisit, i.e. the sampling frequency, would be around 10-15% with some optical aberrations:
 ```bash
-python .\src\cli.py visualize-system-with-aberrations t --radius 150 --wavelength 800e-9 --focal_length 2.3 --pixel_size 4e-6
+python .\src\simulator_of_optical_quality\cli.py visualize-system-with-aberrations t --radius 150 --wavelength 800e-9 --focal_length 2.3 --pixel_size 4e-6
 ```
 ![Image quality simulation for a EO satellite](https://github.com/flp3/Simulator-of-Optical-Quality/blob/master/Screenshots/A%20Cassgrain%20telescope.png?raw=true)
